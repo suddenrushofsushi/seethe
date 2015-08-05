@@ -7,16 +7,13 @@ require 'sexp_processor'
 
 module Seethe
   class Complexity
-
-    ERBHandler = ActionView::Template::Handlers::ERB.new
-
     def initialize(path, flog_cutoff)
       @path = path
       @cutoff = flog_cutoff
     end
 
     def new_template(body, details={format: :html})
-      ActionView::Template.new(body, "irrelevant", details.fetch(:handler) {ERBHandler}, details)
+      ActionView::Template.new(body, "irrelevant", details.fetch(:handler) { erb_handler }, details)
     end
 
     def process
@@ -26,7 +23,7 @@ module Seethe
       totals = @path.inject({}) do |totals, file|
         begin
           ruby_source = File.read(file)
-          ruby_source = ERBHandler.call(new_template(ruby_source)) if file.end_with?(".erb")
+          ruby_source = erb_handler.call(new_template(ruby_source)) if file.end_with?(".erb")
           sexp_parsed = RubyParser.new.parse(ruby_source)
 
           flog_totals = flog_totals_for(sexp_parsed) 
@@ -51,6 +48,12 @@ module Seethe
       flog.process(sexp)
       flog.calculate_total_scores
       flog.totals
+    end
+
+    private
+
+    def erb_handler
+      @erb_handler ||= ActionView::Template::Handlers::ERB.new
     end
   end
 end
