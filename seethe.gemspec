@@ -11,12 +11,21 @@ Gem::Specification.new do |s|
   s.email       = "craigwaterman@gmail.com"
   s.homepage    =
       'http://rubygems.org/gems/seethe'
-  s.license       = 'MIT'
+  s.license       = 'GPL'
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = `git ls-files`.split
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split
   s.require_paths = ['lib']
+  s.executables   = ['seethe']
+
+  s.add_dependency 'actionview'
+  s.add_dependency 'flog'
+  s.add_dependency 'ruby_parser' 
+  s.add_dependency 'sexp_processor'
+  s.add_dependency 'descriptive_statistics'
 
   s.add_development_dependency 'rspec',   '~> 3.1'
   s.add_development_dependency 'guard-rspec', '~> 4.4'
+  s.add_development_dependency 'pry'
+
 end
