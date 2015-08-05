@@ -1,19 +1,27 @@
 #!/usr/bin/env ruby
 require "seethe"
+trap("SIGINT") { puts "User aborted!"; exit! }
 
 def usage
   puts "Usage: seethe [path] [complexity_cutoff] [churn_cutoff]"
 end
 
+if ARGV[0].to_s.strip == "help"
+  usage
+  puts "You may also run ./console and execute Seethe.complect(path, complexity_cutoff, churn_cutoff)"
+  exit!
+end
+
 begin
   path = ARGV[0] || "."
-  puts "Processing rb/erb files in #{path}"
-  complexity_cutoff = ARGV[1].to_i || 60
-  churn_cutoff = ARGV[2].to_i || 10 
-  Seethe.report(path, complexity_cutoff, churn_cutoff)
+  complexity_cutoff = ARGV[1] || 60
+  churn_cutoff = ARGV[2] || 10 
+  puts "Processing rb/erb files in #{path}; looking for complexity > #{complexity_cutoff} and churn > #{churn_cutoff}"
+  Seethe.report(path, complexity_cutoff.to_i, churn_cutoff.to_i)
 rescue Exception => e
   puts "Error: #{e.message}"
   usage
+  exit!
 end
 
 

@@ -20,8 +20,10 @@ module Seethe
     end
 
     def process
-      files = Seethe.glob_directory(@path)
-      totals = files.inject({}) do |totals, file|
+      unless @path.is_a? Array
+        @path = Seethe.glob_directory(@path)
+      end
+      totals = @path.inject({}) do |totals, file|
         begin
           ruby_source = File.read(file)
           ruby_source = ERBHandler.call(new_template(ruby_source)) if file.end_with?(".erb")

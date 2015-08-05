@@ -9,8 +9,11 @@ module Seethe
     end
 
     def process
-      files = Seethe.glob_directory(@path)
-      churn = files.inject({}) do |memo, file|
+      unless @path.is_a? Array
+        @path = Seethe.glob_directory(@path)
+      end
+
+      churn = @path.inject({}) do |memo, file|
         begin
           commit_cmd = "#{@command.sub("{path}", file)} | wc -l"
           commits = `#{commit_cmd}`.to_i

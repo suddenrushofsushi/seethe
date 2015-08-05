@@ -20,7 +20,7 @@ module Seethe
 
     def complect(path, flog_cutoff, churn_cutoff)
       complexity = Seethe::Complexity.new(path, flog_cutoff).process
-      churn = Seethe::Churn.new(path, churn_cutoff).process
+      churn = Seethe::Churn.new(complexity.keys, churn_cutoff).process
       matches = complexity.inject({}) do |memo, (k,v)|
         memo[k] = { churn: churn[k], complexity: v } if churn.has_key? k
         memo
