@@ -1,2 +1,19 @@
 #!/usr/bin/env ruby
 require "seethe"
+
+def usage
+  puts "Usage: seethe [path] [complexity_cutoff] [churn_cutoff]"
+end
+
+begin
+  path = ARGV[0] || "."
+  puts "Processing rb/erb files in #{path}"
+  complexity_cutoff = ARGV[1].to_i || 60
+  churn_cutoff = ARGV[2].to_i || 10 
+  Seethe.report(path, complexity_cutoff, churn_cutoff)
+rescue Exception => e
+  puts "Error: #{e.message}"
+  usage
+end
+
+

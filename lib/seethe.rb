@@ -18,16 +18,16 @@ module Seethe
       Dir.glob(File.join(path, "**/*.*rb"))
     end
 
-    def complect(path, flog_cutoff = 60, churn_cutoff = 10)
+    def complect(path, flog_cutoff, churn_cutoff)
       complexity = Seethe::Complexity.new(path, flog_cutoff).process
       churn = Seethe::Churn.new(path, churn_cutoff).process
-
-      complexity.select do |k,v|
-        churn.has_key? k
+      matches = complexity.inject({}) do |memo, (k,v)|
+        memo[k] = { churn: churn[k], complexity: v } if churn.has_key? k
+        memo
       end
     end
 
-    def report(path, flog_cutoff = 60, churn_cutoff = 10)
+    def report(path, flog_cutoff, churn_cutoff)
       complect(path, flog_cutoff, churn_cutoff).each do |k,v|
         puts "#{k}\t#{v}"
       end

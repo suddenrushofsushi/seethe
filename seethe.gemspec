@@ -18,14 +18,14 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.executables   = ['seethe']
 
-  s.add_dependency 'actionview'
-  s.add_dependency 'flog'
-  s.add_dependency 'ruby_parser' 
-  s.add_dependency 'sexp_processor'
-  s.add_dependency 'descriptive_statistics'
+  s.add_dependency 'actionview', '~> 4.2', '>= 4.2.3'
+  s.add_dependency 'flog', '~> 4.3'
+  s.add_dependency 'ruby_parser', '~> 3.7'
+  s.add_dependency 'sexp_processor', '~> 4.6'
+  s.add_dependency 'descriptive_statistics', '~> 2.5', '>= 2.5.1'
 
   s.add_development_dependency 'rspec',   '~> 3.1'
   s.add_development_dependency 'guard-rspec', '~> 4.4'
-  s.add_development_dependency 'pry'
+  s.add_development_dependency 'pry', '~> 0.10', '>= 0.10.1'
 
 end

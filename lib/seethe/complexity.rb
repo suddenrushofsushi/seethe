@@ -22,13 +22,17 @@ module Seethe
     def process
       files = Seethe.glob_directory(@path)
       totals = files.inject({}) do |totals, file|
-        ruby_source = File.read(file)
-        ruby_source = ERBHandler.call(new_template(ruby_source)) if file.end_with?(".erb")
-        sexp_parsed = RubyParser.new.parse(ruby_source)
+        begin
+          ruby_source = File.read(file)
+          ruby_source = ERBHandler.call(new_template(ruby_source)) if file.end_with?(".erb")
+          sexp_parsed = RubyParser.new.parse(ruby_source)
 
-        flog_totals = flog_totals_for(sexp_parsed) 
-        mean = flog_totals.map { |k,v| v }.select { |v| v > @cutoff }.mean
-        totals[file] = mean unless mean.nil?
+          flog_totals = flog_totals_for(sexp_parsed) 
+          mean = flog_totals.map { |k,v| v }.select { |v| v > @cutoff }.mean
+          totals[file] = mean unless mean.nil?
+        rescue Exception => e
+          puts "Error parsing #{file} (#{e.message})"
+        end
         totals
       end
 
