@@ -29,9 +29,7 @@ module Seethe
       end
 
       churn.inject({}) { |memo, ary| memo[ary[0]] = ary[1]; memo }
-
     end
-
   end
 end
 
