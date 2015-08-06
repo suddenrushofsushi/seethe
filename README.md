@@ -36,4 +36,7 @@ seethe . 0 50
 
 ```
 
-
+Credits
+---
+- [Flog](http://ruby.sadi.st/Flog.html) for ABC metrics
+- [James Martin](https://coderwall.com/p/qdrt3g/getting-empirical-about-complexity-in-templates) — For doing the heavy lifting converting ERB into floggable source.
