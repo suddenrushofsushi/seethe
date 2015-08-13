@@ -8,7 +8,7 @@ end
 
 if ARGV[0].to_s.strip == "help"
   usage
-  puts "You may also run ./console and execute Seethe.complect(path, complexity_cutoff, churn_cutoff)"
+  puts "You may also clone the project, run ./console and execute Seethe.complect(path, complexity_cutoff, churn_cutoff)"
   exit!
 end
 

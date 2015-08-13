@@ -14,7 +14,7 @@ RSpec.describe Seethe do
       expect(described_class.glob_directory("spec/fixtures")).to include("spec/fixtures/example.rb")
     end
   end
-
+  
   describe "preparation" do
     it "changes directory appropriately" do
       expect(Dir.pwd).to eq(File.expand_path("."))
